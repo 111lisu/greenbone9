@@ -1,0 +1,17 @@
+---
+- debug:
+    msg:
+    - 'Get connected https://{{ansible_host}}:4000'
+    - 'The default login credentials are: “admin” as username and password.'
+    - ''
+    - 'Mode info -> https://www.techrepublic.com/article/how-to-run-a-complete-network-scan-with-openvas/'
+    - '          -> https://kifarunix.com/how-to-add-and-scan-a-target-for-vulnerabilities-on-openvas/'
+#    - 'or'
+#    - 'Login ssh vagrant@{{ansible_host}}'
+#    - 'openvas-automate.sh test_ip  - info https://www.kali.org/tutorials/configuring-and-tuning-openvas-in-kali-linux/'
+#    - 'Example - Please select an option: 5'
+
+# https://stackoverflow.com/questions/50876712/authentication-failure-when-starting-openvas-scan
+# I found out why I constantly got the response that the authentication failed. 
+# In mgeeky's script, on line 200, the '$PASS' parameter contains apostrophes .
+# out=$(omp -u $USER -w '$PASS' -h $HOST -p $PORT --xml=\

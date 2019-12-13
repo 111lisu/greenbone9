@@ -1,0 +1,35 @@
+---
+- name: ADD repository do system
+  apt_repository: 
+    repo: 'ppa:mrazavi/openvas'
+    codename: bionic
+    validate_certs: no
+
+- name: Upgrade all packages to the latest version
+  apt:
+    name: "*"
+    state: latest
+
+- name: Installing sqlite3 package
+  package:
+    name:
+      - sqlite3
+      - pcregrep
+    state: latest
+
+- debconf:
+    name: openvas9
+    question: openvas-scanner/enable_redis
+    value: yes
+    vtype: select
+
+- name: Installing openvas9 package
+  package:
+    name=openvas9
+    state=latest
+
+- name: APT - In order to obtain PDF reports with nice fonts for every scanning, some packages need to be installed. 
+  raw: 'apt install texlive-latex-extra --no-install-recommends -y'
+
+- name: APT next In order to obtain PDF reports with nice fonts for every scanning, some packages need to be installed. 
+  raw: 'apt install texlive-fonts-recommended --no-install-recommends -y'

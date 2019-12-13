@@ -1,0 +1,28 @@
+---
+- name: OpenVAS - Update nvt-sync ( wait a long time )
+  raw: 'greenbone-nvt-sync'
+
+- name: OpenVAS - Update scapdata-sync ( wait a long time )
+  raw: 'greenbone-scapdata-sync'
+  ignore_errors: True
+
+- name: OpenVAS - Update certdata-sync ( wait a long time ) 
+  raw: 'greenbone-certdata-sync'
+
+- name: Systemctl enable services
+  raw: 'systemctl enable openvas-scanner; systemctl enable openvas-manager; systemctl enable openvas-gsa'
+
+- name: Systemctl restart services openvas
+  raw: 'systemctl restart openvas-scanner; systemctl restart openvas-manager; systemctl restart openvas-gsa'
+
+- name: GET openvas-check-setup scritp
+  raw: 'wget --no-check-certificate https://svn.wald.intevation.org/openvas/branches/tools-attic/openvas-check-setup -P /usr/local/bin/'
+
+- name: Chmod openvas-check-setup
+  raw: 'chmod +x /usr/local/bin/openvas-check-setup'
+
+- name: GET openvas-check-setup scritp
+  raw: 'wget https://gist.githubusercontent.com/mgeeky/a038f809dff4d308db94f5f657908da7/raw/71bee6cc3de91dea0581ab405c6b9504427d46ca/openvas-automate.sh  -P /usr/local/bin/'
+
+- name: Chmod openvas-automate.sh
+  raw: 'chmod +x /usr/local/bin/openvas-automate.sh'

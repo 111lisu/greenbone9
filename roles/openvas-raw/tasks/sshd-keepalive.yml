@@ -1,0 +1,11 @@
+---
+# ansible 2.7
+- name: SET TCPKeepAlive yes SSHd
+  raw: sed -i -e 's@^\(#\)\{0,1\}TCPKeepAlive .*@TCPKeepAlive yes@' /etc/ssh/sshd_config
+
+- name: SET ClientAliveInterval 20  SSHD
+  raw: sed -i -e 's@^\(#\)\{0,1\}ClientAliveInterval .*@ClientAliveInterval 20@' /etc/ssh/sshd_config
+
+- name: Systemctl restart SSH service
+  raw: systemctl restart ssh
+

@@ -1,0 +1,6 @@
+---
+- name: Check OpenVAS Rebuild - finaling install 
+  raw: 'openvasmd --rebuild --progress --verbose'
+
+#- name: Check OpenVAS heck Setup - finish instalation
+#  raw: 'openvas-check-setup --v9'
