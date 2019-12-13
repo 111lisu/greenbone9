@@ -1,48 +1,7 @@
 ---
-- hosts: pve
+ hosts: pve
   become: yes
-  remote_user: vagrant
-  gather_facts: false
-  vars:
-  tasks:
-
-  - name: Change ssh port to 8888
-    set_fact:
-      ansible_port: 8888
-
-  - name: remove key from known_hosts
-    shell: ssh-keygen -R localhost
-    connection: local
-    become: no
-    #with_items: "{{ groups[ 'lxc_containers' ] }}"
-    #when: hostvars[item]['ansible_host'] is defined
-    ignore_errors: yes
-
-  - name: container key is up-to-date locally
-    shell: ssh-keyscan -H localhost >> ~/.ssh/known_hosts
-    connection: local
-    become: no
-    #with_items: "{{ groups[ 'lxc_containers' ] }}"
-    #when: hostvars[item]['parent'] == inventory_hostname and hostvars[item]['ansible_host'] is defined
-
-  - name: Install Python and other bayer... ;)
-    raw: which python || (apt -y update && apt install -y python)
-
-#  - name: Installing other tools package's
-#    apt:
-#      name:
-#        - mc
-#        - wget
-#        - ntp
-#        - net-tools
-#        - aptitude
-#        - tcpdump
-#        - python-pip
-#      state: latest
-
-- hosts: pve
-  become: yes
-  remote_user: vagrant
+  remote_user: lisu
   gather_facts: no
   vars:
   roles:
