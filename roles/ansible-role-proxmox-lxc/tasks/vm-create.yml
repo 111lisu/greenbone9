@@ -1,0 +1,3 @@
+---
+- name: Create virtual container.
+  raw: 'pct create 999 local:vztmpl/ubuntu-18.04-standard_18.04.1-1_amd64.tar.gz'
