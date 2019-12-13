@@ -1,5 +1,5 @@
 ---
-- hosts: pve
+- hosts: proxmox_node
   become: yes
   remote_user: lisu
   gather_facts: no
