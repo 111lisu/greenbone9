@@ -1,5 +1,5 @@
 ---
- hosts: pve
+- hosts: pve
   become: yes
   remote_user: lisu
   gather_facts: no
