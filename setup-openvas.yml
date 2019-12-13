@@ -65,3 +65,4 @@
   vars:
   roles:
     - openvas-raw
+#    - ansible-role-metasploit

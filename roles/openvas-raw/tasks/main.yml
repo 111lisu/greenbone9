@@ -1,120 +1,20 @@
 ---
-# info  https://kifarunix.com/how-to-install-and-setup-openvas-9-vulnerability-scanner-on-ubuntu-18-04/
-# ansible 2.7
+  # Ansible 2.7 Ubuntu Bionic
+  # -------------------------
+- include: sshd-keepalive.yml
+  tags: [ sshd, sshd-config ]
 
-#- apt_repository: ADD repository
-#    repo: deb http://ppa.launchpad.net/mrazavi/openvas/ubuntu bionic main
-#    state: present
-- name: ADD repository do system
-  apt_repository: 
-    repo: 'ppa:mrazavi/openvas'
-    codename: bionic
-    validate_certs: no
-    state: present
-# - name: Dodanie klucza www.atomicorp.com
-#   raw: wget -q https://www.atomicorp.com/RPM-GPG-KEY.atomicorp.txt -O- |  apt-key add -
-# - name: Dodanie klucza LP-PPA-mrazavi-openvas
-#   raw: wget -q http://ppa.launchpad.net/mrazavi/openvas/ubuntu/dists/bionic/InRelease -O- |  apt-key add -
+- include: redis-install.yml
+  tags: [ redis, redis-install ]
 
-# - name: Add an Apt signing key, uses whichever key is at the URL
-#   apt_key:
-#     url: http://ppa.launchpad.net/mrazavi/openvas/ubuntu/dists/bionic/InRelease
-#     state: present
+- include: openvas-install.yml
+  tags: [ openvas, openvas-install ]
 
-- name: Upgrade all packages to the latest version
-  apt:
-    name: "*"
-    state: latest
+- include: openvas-config.yml
+  tags: [ openvas, openvas-config ]
 
-- name: Installing sqlite3 package
-  package:
-    name=sqlite3
-    state=latest
+- include: openvas-rebuild.yml
+  tags: [ openvas, openvas-rebuild ]
 
-#- name: Installing redis package
-#  package:
-#    name=redis
-#    state=latest
-
-#sed -i -e "s/# \(unix.*\)/\1/" /etc/redis/redis.conf && sed -i -e "s/port\ 6379/port\ 0/g" /etc/redis/redis.conf
-
-#- name: APT Install sqlite3 openvas9
-#  raw: apt install sqlite3 openvas9 -y -f
-
-- debconf:
-    name: openvas9
-    question: openvas-scanner/enable_redis
-    value: yes
-    vtype: select
-
-- name: Installing openvas9 package
-  package:
-    name=openvas9
-    state=latest
-
-- name: SET Redis unixsocket 
-  raw: sed -i -e 's@^\(# \)\{0,1\}unixsocket .*@unixsocket /var/run/redis/redis.sock@' /etc/redis/redis.conf
-
-- name: SET Redis unixsocketperm
-  raw: sed -i -e 's@^\(# \)\{0,1\}unixsocketperm .*@unixsocketperm 770@' /etc/redis/redis.conf
-
-- name: Systemctl restart Redis service 
-  raw: systemctl restart redis
-
-- name: SET TCPKeepAlive yes SSHd
-  raw: sed -i -e 's@^\(#\)\{0,1\}TCPKeepAlive .*@TCPKeepAlive yes@' /etc/ssh/sshd_config
-
-- name: SET ClientAliveInterval 20  SSHD
-  raw: sed -i -e 's@^\(#\)\{0,1\}ClientAliveInterval .*@ClientAliveInterval 20@' /etc/ssh/sshd_config
-
-- name: Systemctl restart Redis service
-  raw: systemctl restart ssh
-
-- name: APT - In order to obtain PDF reports with nice fonts for every scanning, some packages need to be installed. 
-  raw: 'apt install texlive-latex-extra --no-install-recommends -y'
-
-- name: APT next In order to obtain PDF reports with nice fonts for every scanning, some packages need to be installed. 
-  raw: 'apt install texlive-fonts-recommended --no-install-recommends -y'
-
-- name: OpenVAS - Update nvt-sync (wait a long time)
-  raw: 'greenbone-nvt-sync'
-
-- name: OpenVAS - Update scapdata-sync (wait a long time)
-  raw: 'greenbone-scapdata-sync'
-  ignore_errors: True
-
-- name: OpenVAS - Update certdata-sync (wait a long time)
-  raw: 'greenbone-certdata-sync'
-
-- name: Systemctl enable services
-  raw: 'systemctl enable openvas-scanner; systemctl enable openvas-manager; systemctl enable openvas-gsa'
-
-- name: Systemctl restart services openvas
-  raw: 'systemctl restart openvas-scanner; systemctl restart openvas-manager; systemctl restart openvas-gsa'
-
-- name: GET openvas-check-setup scritp
-  raw: 'wget --no-check-certificate https://svn.wald.intevation.org/openvas/branches/tools-attic/openvas-check-setup -P /usr/local/bin/'
-
-- name: Chmod openvas-check-setup
-  raw: 'chmod +x /usr/local/bin/openvas-check-setup'
-
-- name: Check OpenVAS Rebuild - finaling install 
-  raw: 'openvasmd --rebuild --progress --verbose'
-
-#- name: Check OpenVAS heck Setup - finish instalation
-#  raw: 'openvas-check-setup --v9'
-
-- debug:
-    msg:
-    - "Get connected https://IP_address_of_server:4000" 
-    - "The default login credentials are: “admin” as username and password."
-
-
-
-
-# https://stackoverflow.com/questions/50876712/authentication-failure-when-starting-openvas-scan
-# I found out why I constantly got the response that the authentication failed. 
-# In mgeeky's script, on line 200, the '$PASS' parameter contains apostrophes .
-# out=$(omp -u $USER -w '$PASS' -h $HOST -p $PORT --xml=\
-
-
+- include: openvas-msg.yml
+  tags: [ openvas, openvas-msg ]

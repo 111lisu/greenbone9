@@ -1,9 +1,10 @@
 #!/bin/bash
 
-echo "---------------- START ---------------------"
-
+echo "---------- START - ansible 2.7--------------"
+echo "------ Required VirtualBox, Vagrant --------" 
 vagrant up
 ansible-playbook setup-openvas.yml   -i inventories/hosts  -D
 
-echo "---------------- END -----------------------"
+echo "------------- END Install ------------------"
 
+# ansible-playbook setup-openvas.yml   -i inventories/hosts  -D --tags "openvas-rebuild" -vvv
