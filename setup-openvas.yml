@@ -1,5 +1,4 @@
 ---
-#  info - https://mike42.me/blog/2018-03-automating-lxc-container-creation-with-ansible
 #- hosts: greenbone
 #  become: yes
 #  remote_user: vagrant
