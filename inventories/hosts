@@ -1,1 +1,3 @@
 greenbone ansible_host=192.168.30.101
+greenbone-pve ansible_host=localhost
+pve ansible_host=localhost

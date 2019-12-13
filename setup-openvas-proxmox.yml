@@ -1,25 +1,17 @@
 ---
-#- hosts: greenbone
-#  become: yes
-#  remote_user: vagrant
-#  serial: 1
-#  tasks:
-#  - wait_for: host={{ ansible_host }} port=22
-#
-#  - name: container key is up-to-date locally
-#    shell: ssh-keygen -R {{ ansible_host }}; (ssh-keyscan {{ ansible_host }} >> ~/.ssh/known_hosts)
-#
-- hosts: greenbone
+- hosts: pve
   become: yes
   remote_user: vagrant
   gather_facts: false
   vars:
   tasks:
 
-#   Start
+  - name: Change ssh port to 8888
+    set_fact:
+      ansible_port: 8888
 
   - name: remove key from known_hosts
-    shell: ssh-keygen -R 192.168.30.101
+    shell: ssh-keygen -R localhost
     connection: local
     become: no
     #with_items: "{{ groups[ 'lxc_containers' ] }}"
@@ -27,7 +19,7 @@
     ignore_errors: yes
 
   - name: container key is up-to-date locally
-    shell: ssh-keyscan -H 192.168.30.101 >> ~/.ssh/known_hosts
+    shell: ssh-keyscan -H localhost >> ~/.ssh/known_hosts
     connection: local
     become: no
     #with_items: "{{ groups[ 'lxc_containers' ] }}"
@@ -36,22 +28,22 @@
   - name: Install Python and other bayer... ;)
     raw: which python || (apt -y update && apt install -y python)
 
-  - name: Installing other tools package's
-    apt:
-      name:
-        - mc
-        - wget
-        - ntp
-        - net-tools
-        - aptitude
-        - tcpdump
-        - python-pip
-      state: latest
+#  - name: Installing other tools package's
+#    apt:
+#      name:
+#        - mc
+#        - wget
+#        - ntp
+#        - net-tools
+#        - aptitude
+#        - tcpdump
+#        - python-pip
+#      state: latest
 
-- hosts: greenbone
+- hosts: pve
   become: yes
   remote_user: vagrant
   gather_facts: no
   vars:
   roles:
-    - ansible-role-openvas-raw
+    - ansible-role-proxmox-lxc
