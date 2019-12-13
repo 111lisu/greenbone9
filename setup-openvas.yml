@@ -1,6 +1,5 @@
 ---
 #  info - https://mike42.me/blog/2018-03-automating-lxc-container-creation-with-ansible
-#  użyj klawiszy keyscan, aby uzyskać klucze SSH dla każdej maszyny, gdy tylko będzie ona dostępna.
 #- hosts: greenbone
 #  become: yes
 #  remote_user: vagrant
@@ -11,19 +10,12 @@
 #  - name: container key is up-to-date locally
 #    shell: ssh-keygen -R {{ ansible_host }}; (ssh-keyscan {{ ansible_host }} >> ~/.ssh/known_hosts)
 #
-
-  # Przez SSH i zainstaluj Pythona i inne pakiety
 - hosts: greenbone
   become: yes
   remote_user: vagrant
   gather_facts: false
   vars:
   tasks:
-
-#  - name: Wait for ssh to come up
-#    wait_for: host=192.168.30.101 port=22 delay=10  timeout=300
-#    #with_items: "{{ groups[ 'lxc_containers' ] }}"
-#    #when: hostvars[item]['parent'] == inventory_hostname and hostvars[item]['state'] is defined
 
   - name: remove key from known_hosts
     shell: ssh-keygen -R 192.168.30.101
@@ -43,7 +35,7 @@
   - name: Install Python and other bayer... ;)
     raw: which python || (apt -y update && apt install -y python)
 
-  - name: Installing tools package's
+  - name: Installing other tools package's
     apt:
       name:
         - mc
@@ -55,9 +47,6 @@
         - python-pip
       state: latest
 
-# - name: Dodanie klucza www.atomicorp.com
-#   raw: wget -q https://www.atomicorp.com/RPM-GPG-KEY.atomicorp.txt -O- |  apt-key add -
- 
 - hosts: greenbone
   become: yes
   remote_user: vagrant
@@ -65,4 +54,3 @@
   vars:
   roles:
     - openvas-raw
-#    - ansible-role-metasploit
