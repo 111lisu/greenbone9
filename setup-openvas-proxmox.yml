@@ -1,9 +1,11 @@
----
+---i
+  #  echo -n YourPass | makepasswd --crypt-md5 --clearfrom - 
 - hosts: proxmox-node
-  become: yes
-  remote_user: lisu
+  become: no
+  remote_user: root
   gather_facts: no
   vars:
+    - $1$hr9o9P44$K1WifqO5CO1jCeC4apVSF0
   roles:
     - ansible-role-proxmox-lxc
 
@@ -18,9 +20,8 @@
 
 - hosts: greenbone-pve
   gather_facts: no
+  ansible_user: root
   vars:
-  - ansible_user: root
-  # echo -n YourPass | makepasswd --crypt-md5 --clearfrom -
   - password: $1$WT.sL5Xf$6nKPUCrV9hFX15l.1ULUj0
   tasks:
   - name: SET  DNS Serwer - LX-NET DHCP IS OFF
