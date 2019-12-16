@@ -6,3 +6,34 @@
   vars:
   roles:
     - ansible-role-proxmox-lxc
+
+- hosts: 
+  connection: greenbone
+  become: false
+  serial: 1
+  tasks:
+  - wait_for: host={{ ansible_host }} port=22
+  - name: container key is up-to-date locally
+    shell: ssh-keygen -R {{ ansible_host }}; (ssh-keyscan {{ ansible_host }} >> ~/.ssh/known_hosts)
+
+- hosts: greenbone
+  gather_facts: no
+  vars:
+  - ansible_user: root
+  # echo -n YourPass | makepasswd --crypt-md5 --clearfrom -
+  - password: $1$WT.sL5Xf$6nKPUCrV9hFX15l.1ULUj0
+  tasks:
+  - name: SET  DNS Serwer - LX-NET DHCP IS OFF
+    raw: sed -i -e 's@^name.*@nameserver 8.8.8.8@' /etc/resolv.conf
+  - name: install python on target machines
+    raw: which python || (apt -y update && apt install -y python)
+
+- hosts: greenbone
+  become: no 
+  remote_user: root
+  gather_facts: no
+  vars:
+    - password: $1$WT.sL5Xf$6nKPUCrV9hFX15l.1ULUj0
+  roles:
+    - ansible-role-openvas-raw
+

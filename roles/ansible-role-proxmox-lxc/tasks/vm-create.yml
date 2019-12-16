@@ -3,16 +3,4 @@
   raw: pct create {{container}} --description Greenbone local:vztmpl/{{dump_vm}} -storage {{storage}} -net0 name=eth0,bridge={{iface}},ip={{ip}},gw={{gw}} --hostname greenbone --password {{containerpass}} -memory {{memory}}
 
 
-#pct create 199 local:vztmpl/ubuntu-18.04-standard_18.04.1-1_amd64.tar.gz -storage vmspace2 -net0 name=eth0,bridge=vmbr0,ip=172.16.110.147/24,gw=172.16.110.254
 
-
-#pct create {{container}} {{vm_space}}:vm-{{container}}-disk-0/{{dump_vm}}
-
-#- name: Set network settings.
-#  raw: 'pct set {{container}} -net0 name=eth0,bridge={{iface}},ip={{ip}},gw={{gw}}'
-#
-#- name: Set network settings.
-#  raw: 'pct set {{container}} -memory {{memory}}'
-
-#ipct set 100 -net0 name=eth0,bridge=vmbr0,ip=192.168.15.147/24,gw=192.168.15.1
-# vmspace2:vm-109-disk-0,
