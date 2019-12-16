@@ -8,5 +8,4 @@ Virtualbox and Vagrant applications required.
 I had a problem with the device list on LXC
 That's why I chose vagrant and VirtualBox
 
-  echo -n YourPass | makepasswd --crypt-md5 --clearfrom - 
 

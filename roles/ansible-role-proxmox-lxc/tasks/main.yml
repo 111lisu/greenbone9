@@ -1,5 +1,0 @@
----
-  # Ansible 2.7 Ubuntu Bionic
-  # -------------------------
-- include: vm-create.yml
-  tags: [ vm, vm-create ]

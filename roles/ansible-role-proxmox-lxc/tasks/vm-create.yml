@@ -1,5 +1,0 @@
----
-- name: Create virtual container.
-  raw: pct create {{container}} --description Greenbone local:vztmpl/{{dump_vm}} -storage {{storage}} -net0 name=eth0,bridge={{iface}},ip={{ip}},gw={{gw}} --hostname greenbone --password {{containerpass}} -memory {{memory}}
-- name: Start virtual container.
-  raw: pct start {{container}}
