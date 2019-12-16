@@ -1,4 +1,4 @@
----i
+---
   #  echo -n YourPass | makepasswd --crypt-md5 --clearfrom - 
 - hosts: proxmox-node
   become: no
