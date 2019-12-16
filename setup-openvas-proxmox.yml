@@ -1,8 +1,9 @@
 ---
 - hosts: proxmox-node
   gather_facts: no
-  become: true
   vars:
+  - ansible_user: root
+  - ansible_password: qazwsx
   roles:
     - ansible-role-proxmox-lxc
 
@@ -17,19 +18,20 @@
 
 - hosts: greenbone-pve
   gather_facts: no
-  remote_user: root
   vars:
-  tasks:
+  - ansible_user: root
+  - ansible_password: {{containerpass}} 
+ tasks:
   - name: SET  DNS Serwer - LX-NET DHCP IS OFF
     raw: sed -i -e 's@^name.*@nameserver 8.8.8.8@' /etc/resolv.conf
   - name: install python on target machines
     raw: which python || (apt -y update && apt install -y python)
 
 - hosts: greenbone-pve
-  become: no 
-  remote_user: root
   gather_facts: no
   vars:
+  - ansible_user: root
+  - ansible_password: {{containerpass}}
   roles:
     - ansible-role-openvas-raw
 
