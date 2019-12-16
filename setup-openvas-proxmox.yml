@@ -1,18 +1,14 @@
 ---
 - hosts: proxmox-node
-  become: no
-  #remote_user: root
   gather_facts: no
+  become: true
   vars:
-  user:
-   name: root
-   password: $1$hr9o9P44$K1WifqO5CO1jCeC4apVSF0
   roles:
     - ansible-role-proxmox-lxc
 
-- hosts: 
-  connection: greenbone-pve
-  become: false
+- hosts: greenbone-pve
+  connection: greenbone_pve
+  become: true 
   serial: 1
   tasks:
   - wait_for: host={{ ansible_host }} port=22
@@ -21,9 +17,8 @@
 
 - hosts: greenbone-pve
   gather_facts: no
-  ansible_user: root
+  remote_user: root
   vars:
-  - password: $1$WT.sL5Xf$6nKPUCrV9hFX15l.1ULUj0
   tasks:
   - name: SET  DNS Serwer - LX-NET DHCP IS OFF
     raw: sed -i -e 's@^name.*@nameserver 8.8.8.8@' /etc/resolv.conf
@@ -35,7 +30,6 @@
   remote_user: root
   gather_facts: no
   vars:
-    - password: $1$WT.sL5Xf$6nKPUCrV9hFX15l.1ULUj0
   roles:
     - ansible-role-openvas-raw
 
