@@ -1,1 +1,12 @@
 ---
+config_system_locale: 'en_US.UTF-8'
+config_system_language: 'pl_PL.UTF-8'
+
+dump_vm: ubuntu-18.04-standard_18.04.1-1_amd64.tar.gz
+container: 999
+storage: vmspace2
+iface: vmbr0
+ip: 172.16.110.147/24
+gw: 172.16.110.254
+memory: 512
+containerpass: Test.2019
