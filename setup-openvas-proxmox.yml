@@ -8,7 +8,7 @@
     - ansible-role-proxmox-lxc
 
 - hosts: 
-  connection: greenbone
+  connection: greenbone-pve
   become: false
   serial: 1
   tasks:
