@@ -1,11 +1,12 @@
 ---
-  #  echo -n YourPass | makepasswd --crypt-md5 --clearfrom - 
 - hosts: proxmox-node
   become: no
-  remote_user: root
+  #remote_user: root
   gather_facts: no
   vars:
-    - $1$hr9o9P44$K1WifqO5CO1jCeC4apVSF0
+  user:
+   name: root
+   password: $1$hr9o9P44$K1WifqO5CO1jCeC4apVSF0
   roles:
     - ansible-role-proxmox-lxc
 
