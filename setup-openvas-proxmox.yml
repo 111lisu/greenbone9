@@ -1,5 +1,5 @@
 ---
-- hosts: proxmox_node
+- hosts: proxmox-node
   become: yes
   remote_user: lisu
   gather_facts: no
@@ -16,7 +16,7 @@
   - name: container key is up-to-date locally
     shell: ssh-keygen -R {{ ansible_host }}; (ssh-keyscan {{ ansible_host }} >> ~/.ssh/known_hosts)
 
-- hosts: greenbone
+- hosts: greenbone-pve
   gather_facts: no
   vars:
   - ansible_user: root
@@ -28,7 +28,7 @@
   - name: install python on target machines
     raw: which python || (apt -y update && apt install -y python)
 
-- hosts: greenbone
+- hosts: greenbone-pve
   become: no 
   remote_user: root
   gather_facts: no
