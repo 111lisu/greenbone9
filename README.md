@@ -1,4 +1,4 @@
-#OpenVAS / Greenbone 9 on Ubuntu Bionic and Virtualbox
+# OpenVAS / Greenbone 9 on Ubuntu Bionic and Virtualbox
 
 Greenbone Security Assistant, a graphical interface that allows you to manage vulnerability scans from a web application
 
